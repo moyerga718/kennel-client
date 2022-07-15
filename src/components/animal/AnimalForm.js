@@ -3,6 +3,8 @@ import { addAnimal, updateAnimal, getAnimalById } from "../../managers/animals"
 import { getLocations } from "../../managers/locations"
 import { useParams, useNavigate } from 'react-router-dom'
 
+import "./Animals.css"
+
 export const AnimalForm = () => {
   const [locations, setLocations] = useState([])
   const { animalId } = useParams()
@@ -28,9 +30,9 @@ export const AnimalForm = () => {
   }, [animalId])
 
   const constructNewAnimal = () => {
-    const locationId = parseInt(animal.locationId)
+    const location_id = parseInt(animal.location_id)
 
-    if (locationId === 0) {
+    if (location_id === 0) {
       window.alert("Please select a location")
     } else {
       if (animalId) {
@@ -39,9 +41,10 @@ export const AnimalForm = () => {
           id: animal.id,
           name: animal.name,
           breed: animal.breed,
-          locationId: locationId,
-          treatment: animal.treatment,
-          customerId: parseInt(localStorage.getItem("kennel_customer"))
+          location_id: location_id,
+          status: animal.treatment,
+          customer_id: 1
+          // customer_id: parseInt(localStorage.getItem("kennel_customer"))
         })
           .then(() => navigate("/animals"))
       } else {
@@ -49,9 +52,10 @@ export const AnimalForm = () => {
         addAnimal({
           name: animal.name,
           breed: animal.breed,
-          locationId: locationId,
-          treatment: animal.treatment,
-          customerId: parseInt(localStorage.getItem("kennel_customer"))
+          location_id: location_id,
+          status: animal.treatment,
+          customer_id: 1
+          // customer_id: parseInt(localStorage.getItem("kennel_customer"))
         })
           .then(() => navigate("/animals"))
       }
@@ -83,8 +87,8 @@ export const AnimalForm = () => {
       </fieldset>
       <fieldset>
         <div className="form-group">
-          <label htmlFor="locationId">Location: </label>
-          <select name="locationId" className="form-control"
+          <label htmlFor="location_id">Location: </label>
+          <select name="location_id" className="form-control"
             value={animal.location_id}
             onChange={handleControlledInputChange}>
 
